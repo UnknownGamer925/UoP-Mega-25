@@ -60,4 +60,8 @@ public class Vec3 : Mathlib
     {
         return new Vector3(x, y, z);
     }
+    public Vec4 ToVec4()
+    {
+        return new Vec4(x, y, z, 0);
+    }
 }

@@ -5,11 +5,11 @@ using UnityEngine;
 public abstract class Mathlib
 {
 
+    // Vector Functions
     public static float ToRadian(Vector2 vec)
     {  
         return Mathf.Atan(vec.y / vec.x);
     }
-
     public static Vec3 EulerToDirection(Vec3 v3)
     {
         return new Vec3(
@@ -25,9 +25,9 @@ public abstract class Mathlib
     {
         return new Vec3(vector.x,vector.y,vector.z);
     }
-    public Vector4 ToMathlib(Vector4 vector)
+    public static Vec4 ToMathlib(Vector4 vector)
     {
-        return new Vector4(vector.x,vector.y,vector.z,vector.w);
+        return new Vec4(vector.x,vector.y,vector.z,vector.w);
     }
 
 }
