@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.VFX;
 
 public abstract class Mathlib
 {
@@ -17,6 +19,14 @@ public abstract class Mathlib
             Mathf.Sin(v3.z),
             Mathf.Cos(v3.z) * Mathf.Sin(v3.y)
         );
+    }
+    public static Vec3 CrossProduct(Vec3 va, Vec3 vb)
+    {
+        return new Vec3(
+            (va.y * vb.z) - (va.z * vb.y),
+            (va.z * vb.x) - (va.x - vb.z),
+            (va.x * vb.y) - (va.y * va.x)
+            );
     }
 
 
