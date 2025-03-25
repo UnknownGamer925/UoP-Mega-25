@@ -30,6 +30,10 @@ public class Vec3 : Mathlib
     {
         return new Vec3(va.x - vb.x, va.y - vb.y, va.z - vb.z);
     }
+    public static Vec3 operator -(Vec3 va)
+    {
+        return new Vec3(-va.x, -va.y, -va.z);
+    }
     public static Vec3 operator *(Vec3 va, float f)
     {
         return new Vec3(va.x * f, va.y * f, va.z * f);
