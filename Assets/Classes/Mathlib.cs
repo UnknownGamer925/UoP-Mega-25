@@ -28,6 +28,44 @@ public abstract class Mathlib
             (va.x * vb.y) - (va.y * va.x)
             );
     }
+    public static float DotProduct(Vec3 va, Vec3 vb, bool normalize)
+    {
+        Vec3 van;
+        Vec3 vbn;
+        
+        if (normalize) 
+        {
+            van = va.Normalized();
+            vbn = vb.Normalized();
+        }
+        else
+        {
+            van = va;
+            vbn = vb;
+        }
+
+        return ((van.x * vbn.x) + (van.y * vbn.y) + (van.z * vbn.z));
+    }
+    public static float DotProduct(Vec3 va, Vec3 vb)
+    {
+        return ((va.x * vb.x) + (va.y * vb.y) + (va.z * vb.z));
+    }
+
+
+    // Interpolation Functions
+    public static Vec3 Lerp(Vec3 va, Vec3 vb, float t)
+    {
+        return (va * (1.0f - t) + (vb * t));
+    }
+    public static Quat Slerp(Quat q, Quat r, float t)
+    {
+        t = Mathf.Clamp(t, 0f, 1f);
+
+        Quat d = r * q.Inverse();
+        Vec4 axis_angle = d.AxisAngle();
+
+        return new Quat(axis_angle.w * t, new Vec3(axis_angle.x, axis_angle.y, axis_angle.z)) * q; // return dT * q
+    }
 
 
     //Conversions to Mathlib class

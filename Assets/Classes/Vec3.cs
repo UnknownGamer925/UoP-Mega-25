@@ -53,9 +53,13 @@ public class Vec3 : Mathlib
 
 
     //Functions
-    public static Vec3 Lerp(Vec3 va, Vec3 vb, float t)
+    public Vec3 Normalized()
     {
-        return (va * (1.0f - t) + (vb * t));
+        return new Vec3(x / Length(), y / Length(), z / Length());
+    }
+    public float Length()
+    {
+        return Mathf.Sqrt((x * x) + (y * y) + (z * z));
     }
 
 

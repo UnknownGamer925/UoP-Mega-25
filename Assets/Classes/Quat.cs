@@ -32,14 +32,23 @@ public class Quat : Mathlib
     //Operator overload
     public static Quat operator *(Quat r, Quat s)
     {
-        //return new Quat(((s.w * r.w) - ));
-        return new Quat(0,0,0,0);
+        return new Quat(((s.w * r.w) - Mathlib.DotProduct(r.axis, s.axis, true)), ((s.w * r.axis) + (r.w * s.axis)));
     }
 
     //Functions
     public Quat Inverse()
     {
         return new Quat(w, -axis);
+    }
+    public Vec4 AxisAngle()
+    {
+        float halfAngle = Mathf.Acos(w);
+        return new Vec4(
+            (x / Mathf.Sin(halfAngle)),
+            (y / Mathf.Sin(halfAngle)),
+            (z / Mathf.Sin(halfAngle)),
+            halfAngle * 2
+            );
     }
 
 
