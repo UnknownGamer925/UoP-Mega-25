@@ -77,7 +77,7 @@ public abstract class Mathlib
     {
         return new Vec4(vector.x,vector.y,vector.z,vector.w);
     }
-    public static Quat ToMathLib(Quaternion quat)
+    public static Quat ToMathlib(Quaternion quat)
     {
         return new Quat(quat.w, quat.x, quat.y, quat.z);
     }

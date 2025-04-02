@@ -57,4 +57,18 @@ public class Quat : Mathlib
     {
         return new Quaternion(x, y, z, w);
     }
+    public Mat4X4 ToMat4X4()
+    {
+        return new Mat4X4(
+            new Vec4((1 - 2 * (y*y + z*z)), (2 * (x*y + z*w)), (2 * (x*z - y*w)), 0),
+            new Vec4((2 * (x*y - z*w)), (1 - 2 * (x*x + z*z)), (2 * (y*z + x*w)), 0),
+            new Vec4((2 * (x*z + y*w)), (2 * (y*z - x*w)), (1 - 2 * (x*x + y*y)), 0),
+            new Vec4(0, 0, 0, 1)
+
+        );
+    }
+    public Vec4 ToVec4()
+    {
+        return new Vec4 (x, y, z, w);
+    }
 }

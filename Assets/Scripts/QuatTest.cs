@@ -27,7 +27,7 @@ public class QuatTest : MonoBehaviour
         Vec3 newP = newK.axis;
 
         //Set the position to see it working
-        transform.rotation = newK.ToUnity();
+        transform.position = newP.ToUnity();
     }
     
     void TestTwo()
@@ -67,6 +67,6 @@ public class QuatTest : MonoBehaviour
     void Update()
     {
         //TestOne();
-        TestTwo();
+        //TestTwo();
     }
 }
