@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.Search;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class Quat : Mathlib
 {
@@ -49,6 +50,14 @@ public class Quat : Mathlib
             (z / Mathf.Sin(halfAngle)),
             halfAngle * 2
             );
+    }
+    public Quat Normalised()
+    {
+        return new Quat(w / Length(), x / Length(), y / Length(), z / Length());
+    }
+    public float Length()
+    {
+        return Mathf.Sqrt((w*w) + (x*x) + (y*y) + (z*z));
     }
 
 

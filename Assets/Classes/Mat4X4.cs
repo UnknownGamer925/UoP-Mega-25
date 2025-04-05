@@ -8,6 +8,7 @@ public class Mat4X4 : Mathlib
 
     public Mat4X4(Vec4 va, Vec4 vb, Vec4 vc, Vec4 vd)
     {
+        table = new float[4, 4];
         //     column 1    |      column2      |      column 3     |      column 4     |
         table[0, 0] = va.x; table[0, 1] = vb.x; table[0, 2] = vc.x; table[0, 3] = vd.x;
         table[1, 0] = va.y; table[1, 1] = vb.y; table[1, 2] = vc.y; table[1, 3] = vd.y;
@@ -16,6 +17,7 @@ public class Mat4X4 : Mathlib
     }
     public Mat4X4(Vec3 va, Vec3 vb, Vec3 vc, Vec3 vd)
     {
+        table = new float[4, 4];
         //     column 1    |      column2      |      column 3     |      column 4     |
         table[0, 0] = va.x; table[0, 1] = vb.x; table[0, 2] = vc.x; table[0, 3] = vd.x;
         table[1, 0] = va.y; table[1, 1] = vb.y; table[1, 2] = vc.y; table[1, 3] = vd.y;
@@ -102,7 +104,7 @@ public class Mat4X4 : Mathlib
 
         float S = Mathf.Sqrt(T);
         return new Quat(
-            (0.25f * S), 
+            (0.25f * S) * 2, 
             ((table[1, 2] - table[2, 1]) / S), 
             ((table[1, 0] - table[0, 2]) / S), 
             ((table[0, 1] - table[1, 0]) / S)

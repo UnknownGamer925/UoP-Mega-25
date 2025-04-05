@@ -17,7 +17,6 @@ public class ObjectScript : MonoBehaviour
 
         return YawQuat * pos * YawQuat.Inverse();
     }
-
     Quat CalulatePitch(float my) 
     {
         Quat PitchQuat = new Quat(my, new Vec3(0, 0, 1));
@@ -36,13 +35,18 @@ public class ObjectScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        mouse_x = Input.GetAxisRaw("Mouse X");
-        mouse_y = Input.GetAxisRaw("Mouse Y");
+        mouse_x += Input.GetAxisRaw("Mouse X") * 0.5f;
+        mouse_y += Input.GetAxisRaw("Mouse Y") * 0.5f;
 
         Quat Rot_x = CalulateYaw(mouse_x);
         Quat Rot_y = CalulatePitch(mouse_y);
 
-        Quat Rot = Rot_x;
-        transform.rotation = Rot.ToUnity();
+        Mat4X4 xRotMat = Rot_x.ToMat4X4();
+        Mat4X4 yRotMat = Rot_y.ToMat4X4();
+
+        Mat4X4 RotMat = xRotMat * yRotMat;
+
+        transform.rotation = RotMat.ToQuat().ToUnity();
+        
     }
 }
