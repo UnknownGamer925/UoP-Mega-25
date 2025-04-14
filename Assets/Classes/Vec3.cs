@@ -15,7 +15,7 @@ public class Vec3 : Mathlib
         y = vy; 
         z = vz;
     }
-    public Vec3 empty
+    public static Vec3 empty
     {
         get {  return new Vec3(0, 0, 0); }
     }

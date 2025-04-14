@@ -10,21 +10,21 @@ public class Mat4X4 : Mathlib
     {
         table = new float[4, 4];
         //     column 1    |      column2      |      column 3     |      column 4     |
-        table[0, 0] = va.x; table[0, 1] = vb.x; table[0, 2] = vc.x; table[0, 3] = vd.x;
-        table[1, 0] = va.y; table[1, 1] = vb.y; table[1, 2] = vc.y; table[1, 3] = vd.y;
-        table[2, 0] = va.z; table[2, 1] = vb.z; table[2, 2] = vc.z; table[2, 3] = vd.z;
-        table[3, 0] = va.w; table[3, 1] = vb.w; table[3, 2] = vc.w; table[3, 3] = vd.w;
+        table[0, 0] = va.x; table[0, 1] = va.y; table[0, 2] = va.z; table[0, 3] = va.w;
+        table[1, 0] = vb.x; table[1, 1] = vb.y; table[1, 2] = vb.z; table[1, 3] = vb.w;
+        table[2, 0] = vc.x; table[2, 1] = vc.y; table[2, 2] = vc.z; table[2, 3] = vc.w;
+        table[3, 0] = vd.x; table[3, 1] = vd.y; table[3, 2] = vd.z; table[3, 3] = vd.w;
     }
     public Mat4X4(Vec3 va, Vec3 vb, Vec3 vc, Vec3 vd)
     {
         table = new float[4, 4];
         //     column 1    |      column2      |      column 3     |      column 4     |
-        table[0, 0] = va.x; table[0, 1] = vb.x; table[0, 2] = vc.x; table[0, 3] = vd.x;
-        table[1, 0] = va.y; table[1, 1] = vb.y; table[1, 2] = vc.y; table[1, 3] = vd.y;
-        table[2, 0] = va.z; table[2, 1] = vb.z; table[2, 2] = vc.z; table[2, 3] = vd.z;
-        table[3, 0] = 0;    table[3, 1] = 0;    table[3, 2] = 0;    table[3, 3] = 0;
+        table[0, 0] = va.x; table[0, 1] = va.y; table[0, 2] = va.z; table[0, 3] = 0;
+        table[1, 0] = vb.x; table[1, 1] = vb.y; table[1, 2] = vb.z; table[1, 3] = 0;
+        table[2, 0] = vc.x; table[2, 1] = vc.y; table[2, 2] = vc.z; table[2, 3] = 0;
+        table[3, 0] = vd.x; table[3, 1] = vd.y; table[3, 2] = vd.z; table[3, 3] = 0;
     }
-    public Mat4X4 identity
+    public static Mat4X4 identity
     {
         get {
             return new Mat4X4(
@@ -67,28 +67,108 @@ public class Mat4X4 : Mathlib
     {
         return new Mat4X4(
             new Vec4(
-                mta.table[0, 0] * mtb.table[0, 0],
-                mta.table[0, 1] * mtb.table[0, 1],
-                mta.table[0, 2] * mtb.table[0, 2],
-                mta.table[0, 3] * mtb.table[0, 3]
-            ),
-            new Vec4(
-                mta.table[1, 0] * mtb.table[1, 0],
-                mta.table[1, 1] * mtb.table[1, 1],
-                mta.table[1, 2] * mtb.table[1, 2],
-                mta.table[1, 3] * mtb.table[1, 3]
+                (
+                    (mta.table[0, 0] * mtb.table[0, 0]) +
+                    (mta.table[0, 1] * mtb.table[1, 0]) +
+                    (mta.table[0, 2] * mtb.table[2, 0]) +
+                    (mta.table[0, 3] * mtb.table[3, 0])
                 ),
-            new Vec4(
-                mta.table[2, 0] * mtb.table[2, 0],
-                mta.table[2, 1] * mtb.table[2, 1],
-                mta.table[2, 2] * mtb.table[2, 2],
-                mta.table[2, 3] * mtb.table[2, 3]
+                (
+                    (mta.table[0, 0] * mtb.table[0, 1]) +
+                    (mta.table[0, 1] * mtb.table[1, 1]) +
+                    (mta.table[0, 2] * mtb.table[2, 1]) +
+                    (mta.table[0, 3] * mtb.table[3, 1])
+                ),
+                (
+                    (mta.table[0, 0] * mtb.table[0, 2]) +
+                    (mta.table[0, 1] * mtb.table[1, 2]) +
+                    (mta.table[0, 2] * mtb.table[2, 2]) +
+                    (mta.table[0, 3] * mtb.table[3, 2])
+                ),
+                (
+                    (mta.table[0, 0] * mtb.table[0, 3]) +
+                    (mta.table[0, 1] * mtb.table[1, 3]) +
+                    (mta.table[0, 2] * mtb.table[2, 3]) +
+                    (mta.table[0, 3] * mtb.table[3, 3])
+                )
             ),
             new Vec4(
-                mta.table[3, 0] * mtb.table[3, 0],
-                mta.table[3, 1] * mtb.table[3, 1],
-                mta.table[3, 2] * mtb.table[3, 2],
-                mta.table[3, 3] * mtb.table[3, 3]
+                (
+                    (mta.table[1, 0] * mtb.table[0, 0]) +
+                    (mta.table[1, 1] * mtb.table[1, 0]) +
+                    (mta.table[1, 2] * mtb.table[2, 0]) +
+                    (mta.table[1, 3] * mtb.table[3, 0])
+                ),
+                (
+                    (mta.table[1, 0] * mtb.table[0, 1]) +
+                    (mta.table[1, 1] * mtb.table[1, 1]) +
+                    (mta.table[1, 2] * mtb.table[2, 1]) +
+                    (mta.table[1, 3] * mtb.table[3, 1])
+                ),
+                (
+                    (mta.table[1, 0] * mtb.table[0, 2]) +
+                    (mta.table[1, 1] * mtb.table[1, 2]) +
+                    (mta.table[1, 2] * mtb.table[2, 2]) +
+                    (mta.table[1, 3] * mtb.table[3, 2])
+                ),
+                (
+                    (mta.table[1, 0] * mtb.table[0, 3]) +
+                    (mta.table[1, 1] * mtb.table[1, 3]) +
+                    (mta.table[1, 2] * mtb.table[2, 3]) +
+                    (mta.table[1, 3] * mtb.table[3, 3])
+                )
+            ),
+            new Vec4(
+                (
+                    (mta.table[2, 0] * mtb.table[0, 0]) +
+                    (mta.table[2, 1] * mtb.table[1, 0]) +
+                    (mta.table[2, 2] * mtb.table[2, 0]) +
+                    (mta.table[2, 3] * mtb.table[3, 0])
+                ),
+                (
+                    (mta.table[2, 0] * mtb.table[0, 1]) +
+                    (mta.table[2, 1] * mtb.table[1, 1]) +
+                    (mta.table[2, 2] * mtb.table[2, 1]) +
+                    (mta.table[2, 3] * mtb.table[3, 1])
+                ),
+                (
+                    (mta.table[2, 0] * mtb.table[0, 2]) +
+                    (mta.table[2, 1] * mtb.table[1, 2]) +
+                    (mta.table[2, 2] * mtb.table[2, 2]) +
+                    (mta.table[2, 3] * mtb.table[3, 2])
+                ),
+                (
+                    (mta.table[2, 0] * mtb.table[0, 3]) +
+                    (mta.table[2, 1] * mtb.table[1, 3]) +
+                    (mta.table[2, 2] * mtb.table[2, 3]) +
+                    (mta.table[2, 3] * mtb.table[3, 3])
+                )
+            ),
+            new Vec4(
+                (
+                    (mta.table[3, 0] * mtb.table[0, 0]) +
+                    (mta.table[3, 1] * mtb.table[1, 0]) +
+                    (mta.table[3, 2] * mtb.table[2, 0]) +
+                    (mta.table[3, 3] * mtb.table[3, 0])
+                ),
+                (
+                    (mta.table[3, 0] * mtb.table[0, 1]) +
+                    (mta.table[3, 1] * mtb.table[1, 1]) +
+                    (mta.table[3, 2] * mtb.table[2, 1]) +
+                    (mta.table[3, 3] * mtb.table[3, 1])
+                ),
+                (
+                    (mta.table[3, 0] * mtb.table[0, 2]) +
+                    (mta.table[3, 1] * mtb.table[1, 2]) +
+                    (mta.table[3, 2] * mtb.table[2, 2]) +
+                    (mta.table[3, 3] * mtb.table[3, 2])
+                ),
+                (
+                    (mta.table[3, 0] * mtb.table[0, 3]) +
+                    (mta.table[3, 1] * mtb.table[1, 3]) +
+                    (mta.table[3, 2] * mtb.table[2, 3]) +
+                    (mta.table[3, 3] * mtb.table[3, 3])
+                )
             )
         );
     }   
@@ -106,7 +186,7 @@ public class Mat4X4 : Mathlib
         return new Quat(
             (0.25f * S) * 2, 
             ((table[1, 2] - table[2, 1]) / S), 
-            ((table[1, 0] - table[0, 2]) / S), 
+            ((table[2, 0] - table[0, 2]) / S), 
             ((table[0, 1] - table[1, 0]) / S)
         );
     }

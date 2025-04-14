@@ -18,10 +18,11 @@ public class Quat : Mathlib
     }
     public Quat(float qw, float qx, float qy, float qz)
     {
-        w = qw;
-        x = qx;
-        y = qy;
-        z = qz;
+        float half_angle = qw / 2;
+        w = Mathf.Cos(half_angle);
+        x = qx * Mathf.Sin(half_angle);
+        y = qy * Mathf.Cos(half_angle);
+        z = qz * Mathf.Sin(half_angle);
     }
     public Vec3 axis
     {
@@ -33,7 +34,7 @@ public class Quat : Mathlib
     //Operator overload
     public static Quat operator *(Quat r, Quat s)
     {
-        return new Quat(((s.w * r.w) - Mathlib.DotProduct(r.axis, s.axis, true)), ((s.w * r.axis) + (r.w * s.axis)));
+        return new Quat(((s.w * r.w) - Mathlib.DotProduct(r.axis, s.axis, true)), ((s.w * r.axis) + (r.w * s.axis) + Mathlib.CrossProduct(r.axis, s.axis)));
     }
 
     //Functions
