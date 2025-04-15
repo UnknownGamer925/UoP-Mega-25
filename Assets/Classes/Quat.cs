@@ -18,11 +18,16 @@ public class Quat : Mathlib
     }
     public Quat(float qw, float qx, float qy, float qz)
     {
-        float half_angle = qw / 2;
-        w = Mathf.Cos(half_angle);
-        x = qx * Mathf.Sin(half_angle);
-        y = qy * Mathf.Cos(half_angle);
-        z = qz * Mathf.Sin(half_angle);
+        w = qw;
+        x = qx;
+        y = qy;
+        z = qz;
+        
+        //float half_angle = qw / 2;
+        //w = Mathf.Cos(half_angle);
+        //x = qx * Mathf.Sin(half_angle);
+        //y = qy * Mathf.Cos(half_angle);
+        //z = qz * Mathf.Sin(half_angle);
     }
     public Vec3 axis
     {
