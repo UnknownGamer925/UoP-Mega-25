@@ -14,6 +14,18 @@ public class CameraScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        float mouse_x = 0;
+        float mouse_y = 0;
+        //Get Mouse Position
+        if (!Input.GetKey(KeyCode.E))
+        {
+            mouse_x = Input.GetAxis("Mouse X");
+            mouse_y = Input.GetAxis("Mouse Y");
+        }
+            
+
+        //updates position and rotation based on player & mouse position respetively
+        Vector3 euler = this.transform.eulerAngles;
+        this.transform.eulerAngles = new Vector3((euler.x - mouse_y), (euler.y + mouse_x), 0f);
     }
 }

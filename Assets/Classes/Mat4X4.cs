@@ -92,114 +92,6 @@ public class Mat4X4 : Mathlib
         (mta.table[0, 3] * mtb.table[3, 0]) + (mta.table[1, 3] * mtb.table[3, 1]) + (mta.table[2, 3] * mtb.table[3, 2]) + (mta.table[3, 3] * mtb.table[3, 3])
         )
             );
-
-
-        //return new Mat4X4(
-        //    new Vec4(
-        //        (
-        //            (mta.table[0, 0] * mtb.table[0, 0]) +
-        //            (mta.table[0, 1] * mtb.table[1, 0]) +
-        //            (mta.table[0, 2] * mtb.table[2, 0]) +
-        //            (mta.table[0, 3] * mtb.table[3, 0])
-        //        ),
-        //        (
-        //            (mta.table[0, 0] * mtb.table[0, 1]) +
-        //            (mta.table[0, 1] * mtb.table[1, 1]) +
-        //            (mta.table[0, 2] * mtb.table[2, 1]) +
-        //            (mta.table[0, 3] * mtb.table[3, 1])
-        //        ),
-        //        (
-        //            (mta.table[0, 0] * mtb.table[0, 2]) +
-        //            (mta.table[0, 1] * mtb.table[1, 2]) +
-        //            (mta.table[0, 2] * mtb.table[2, 2]) +
-        //            (mta.table[0, 3] * mtb.table[3, 2])
-        //        ),
-        //        (
-        //            (mta.table[0, 0] * mtb.table[0, 3]) +
-        //            (mta.table[0, 1] * mtb.table[1, 3]) +
-        //            (mta.table[0, 2] * mtb.table[2, 3]) +
-        //            (mta.table[0, 3] * mtb.table[3, 3])
-        //        )
-        //    ),
-        //    new Vec4(
-        //        (
-        //            (mta.table[1, 0] * mtb.table[0, 0]) +
-        //            (mta.table[1, 1] * mtb.table[1, 0]) +
-        //            (mta.table[1, 2] * mtb.table[2, 0]) +
-        //            (mta.table[1, 3] * mtb.table[3, 0])
-        //        ),
-        //        (
-        //            (mta.table[1, 0] * mtb.table[0, 1]) +
-        //            (mta.table[1, 1] * mtb.table[1, 1]) +
-        //            (mta.table[1, 2] * mtb.table[2, 1]) +
-        //            (mta.table[1, 3] * mtb.table[3, 1])
-        //        ),
-        //        (
-        //            (mta.table[1, 0] * mtb.table[0, 2]) +
-        //            (mta.table[1, 1] * mtb.table[1, 2]) +
-        //            (mta.table[1, 2] * mtb.table[2, 2]) +
-        //            (mta.table[1, 3] * mtb.table[3, 2])
-        //        ),
-        //        (
-        //            (mta.table[1, 0] * mtb.table[0, 3]) +
-        //            (mta.table[1, 1] * mtb.table[1, 3]) +
-        //            (mta.table[1, 2] * mtb.table[2, 3]) +
-        //            (mta.table[1, 3] * mtb.table[3, 3])
-        //        )
-        //    ),
-        //    new Vec4(
-        //        (
-        //            (mta.table[2, 0] * mtb.table[0, 0]) +
-        //            (mta.table[2, 1] * mtb.table[1, 0]) +
-        //            (mta.table[2, 2] * mtb.table[2, 0]) +
-        //            (mta.table[2, 3] * mtb.table[3, 0])
-        //        ),
-        //        (
-        //            (mta.table[2, 0] * mtb.table[0, 1]) +
-        //            (mta.table[2, 1] * mtb.table[1, 1]) +
-        //            (mta.table[2, 2] * mtb.table[2, 1]) +
-        //            (mta.table[2, 3] * mtb.table[3, 1])
-        //        ),
-        //        (
-        //            (mta.table[2, 0] * mtb.table[0, 2]) +
-        //            (mta.table[2, 1] * mtb.table[1, 2]) +
-        //            (mta.table[2, 2] * mtb.table[2, 2]) +
-        //            (mta.table[2, 3] * mtb.table[3, 2])
-        //        ),
-        //        (
-        //            (mta.table[2, 0] * mtb.table[0, 3]) +
-        //            (mta.table[2, 1] * mtb.table[1, 3]) +
-        //            (mta.table[2, 2] * mtb.table[2, 3]) +
-        //            (mta.table[2, 3] * mtb.table[3, 3])
-        //        )
-        //    ),
-        //    new Vec4(
-        //        (
-        //            (mta.table[3, 0] * mtb.table[0, 0]) +
-        //            (mta.table[3, 1] * mtb.table[1, 0]) +
-        //            (mta.table[3, 2] * mtb.table[2, 0]) +
-        //            (mta.table[3, 3] * mtb.table[3, 0])
-        //        ),
-        //        (
-        //            (mta.table[3, 0] * mtb.table[0, 1]) +
-        //            (mta.table[3, 1] * mtb.table[1, 1]) +
-        //            (mta.table[3, 2] * mtb.table[2, 1]) +
-        //            (mta.table[3, 3] * mtb.table[3, 1])
-        //        ),
-        //        (
-        //            (mta.table[3, 0] * mtb.table[0, 2]) +
-        //            (mta.table[3, 1] * mtb.table[1, 2]) +
-        //            (mta.table[3, 2] * mtb.table[2, 2]) +
-        //            (mta.table[3, 3] * mtb.table[3, 2])
-        //        ),
-        //        (
-        //            (mta.table[3, 0] * mtb.table[0, 3]) +
-        //            (mta.table[3, 1] * mtb.table[1, 3]) +
-        //            (mta.table[3, 2] * mtb.table[2, 3]) +
-        //            (mta.table[3, 3] * mtb.table[3, 3])
-        //        )
-        //    )
-        //);
     }   
 
     //Conversion
@@ -209,14 +101,57 @@ public class Mat4X4 : Mathlib
     }
     public Quat ToQuat()
     {
+        Quat newQuat;
+        
         float T =  1 + table[0,0] + table[1,1] + table[2,2];
+        float S;
 
-        float S = Mathf.Sqrt(T) * 2;
-        return new Quat(
-            (0.25f * S), 
-            ((table[2, 1] - table[1, 2]) / S), 
-            ((table[2, 0] - table[0, 2]) / S), 
+        if (T > 0.00000001f)
+        {
+            S = Mathf.Sqrt(T) * 2;
+            newQuat = new Quat(
+            (0.25f * S),
+            ((table[2, 1] - table[1, 2]) / S),
+            ((table[2, 0] - table[0, 2]) / S),
             ((table[0, 1] - table[1, 0]) / S)
-        );
+            );
+        }
+        else
+        {
+            if ((table[0, 0] > table[1, 1]) && table[0, 0] > table[2, 2]) //collumn 0
+            {
+                S = Mathf.Sqrt(1 + table[0, 0] - table[1, 1] - table[2, 2]) * 2;
+                newQuat = new Quat(
+                    (table[1, 2] - table[2, 1]) / S,
+                    0.25f * S,
+                    (table[3, 0] + table[1, 0]) / S,
+                    (table[2, 0] + table[0, 3]) / S
+                );
+            }
+            else if ((table[1, 1] > table[2, 2])) { //collumn 1
+                S = Mathf.Sqrt(1 + table[1, 1] - table[0, 0] - table[2, 2]);
+                newQuat = new Quat(
+                    (table[3, 0] - table[0, 3]) / S,
+                    (table[3, 0] + table[1, 0]) / S,
+                    0.25f * S,
+                    (table[1, 2] + table[2, 1]) / S
+                    );
+            }
+            else //collumn 2
+            {
+                S = Mathf.Sqrt(1 + table[2, 2] - table[0, 0] - table[1, 1]);
+                newQuat = new Quat(
+                    (table[3, 0] - table[1, 0]) / S,
+                    (table[3, 0] + table[0, 3]) / S,
+                    (table[1, 2] + table[2, 1]) / S,
+                    0.25f * S
+                    );
+            }
+        }
+
+        return newQuat;
+
+
+        
     }
 }

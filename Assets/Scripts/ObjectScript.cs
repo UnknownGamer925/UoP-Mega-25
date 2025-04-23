@@ -8,7 +8,7 @@ using UnityEngine.UIElements;
 public class ObjectScript : MonoBehaviour
 {
     [SerializeField] public Vector3 EulerVisual;
-    MeshFilter mf;
+    [SerializeField] Camera Cam;
 
     public Mat4X4 RotateMesh(Vec3 euler)
     {
@@ -38,37 +38,27 @@ public class ObjectScript : MonoBehaviour
         return yawmat * (pitchmat * rollmat);
     }
 
-    void ApplyMeshTransform(Mat4X4 Rotation)
-    {
-        Vector3[] Vertices = mf.mesh.vertices;
-        Vector3[] transformedVertices = new Vector3[Vertices.Length];
-
-        for (int i = 0; i < transformedVertices.Length; i++)
-        {
-            transformedVertices[i] = Rotation * new Vector4(Vertices[i].x, Vertices[i].y, Vertices[i].z, 1);
-        }
-
-        mf.mesh.vertices = transformedVertices;
-        mf.mesh.RecalculateNormals();
-        mf.mesh.RecalculateBounds();
-    }
-
     // Start is called before the first frame update
     void Start()
     {
-        mf = GetComponent<MeshFilter>();
+        
     }
 
     // Update is called once per frame
     void Update()
     {
-        EulerVisual.x -= Input.GetAxisRaw("Mouse X") * 0.3f;
-        EulerVisual.y += Input.GetAxisRaw("Mouse Y") * 0.3f;
+        if (Input.GetKey(KeyCode.E))
+        {
+            EulerVisual.x += Input.GetAxisRaw("Mouse X") * 0.3f;
+            EulerVisual.y += Input.GetAxisRaw("Mouse Y") * 0.3f;
+        }
 
 
-        Quat M = RotateMesh(Mathlib.ToMathlib(EulerVisual)).ToQuat();
-        //Debug.Log(M.x + " " + M.y + " " + M.z + " " + M.w);
-        transform.rotation = M.ToUnity();
+        Vec3 EulerVec3 = Mathlib.ToMathlib(EulerVisual);
+
+        Quat RelativeRot = RotateMesh(EulerVec3).ToQuat();
+
+        transform.rotation = RelativeRot.ToUnity();
         
     }
 }
