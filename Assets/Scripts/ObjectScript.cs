@@ -9,6 +9,16 @@ public class ObjectScript : MonoBehaviour
 {
     [SerializeField] public Vector3 EulerVisual;
     [SerializeField] Camera Cam;
+    [SerializeField] GameObject ItemPoint;
+    private bool focus;
+
+    Vector3[] ModelSpaceVertices;
+    Vector3[] transformedVertices;
+    MeshFilter mf;
+
+    Vec3 pos;
+    Vec3 campos;
+
 
     public Mat4X4 RotateMesh(Vec3 euler)
     {
@@ -38,17 +48,71 @@ public class ObjectScript : MonoBehaviour
         return yawmat * (pitchmat * rollmat);
     }
 
+    public void ScaleMesh()
+    {
+        Mat4X4 matrix =  new Mat4X4(
+            new Vec3(1, 0, 0) * 2f,
+            new Vec3(0, 1, 0) * 2f,
+            new Vec3(0, 0, 1) * 2f,
+            Vec3.empty
+        );
+
+        for (int i = 0; i < transformedVertices.Length; i++)
+        {
+            transformedVertices[i] = matrix * ModelSpaceVertices[i]; //new Vector4(ModelSpaceVertices[i].x, ModelSpaceVertices[i].y, ModelSpaceVertices[i].z, 1);
+        }
+
+        mf.mesh.vertices = transformedVertices;
+        mf.mesh.RecalculateNormals();
+        mf.mesh.RecalculateBounds();
+    }
+
+    public void FocusToggle()
+    {
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            focus = true;
+
+
+        }
+        if (Input.GetKeyUp(KeyCode.E))
+        {
+            focus = false;
+            
+
+        }
+    }
     // Start is called before the first frame update
     void Start()
     {
-        
+        mf = GetComponent<MeshFilter>();
+        ModelSpaceVertices = mf.mesh.vertices;
+        transformedVertices = new Vector3[ModelSpaceVertices.Length];
+
+        pos = Mathlib.ToMathlib(ItemPoint.transform.position);
     }
 
     // Update is called once per frame
     void Update()
     {
+        FocusToggle();
+        
+        
         if (Input.GetKey(KeyCode.E))
         {
+            if (!focus)
+            {
+                //campos = Mathlib.ToMathlib(ItemPoint.transform.position);
+                transform.position = Mathlib.Lerp(campos, pos, 0.8f).ToUnity();
+            }
+            else if (focus)
+            {
+                campos = Mathlib.ToMathlib(ItemPoint.transform.position);
+                transform.position = Mathlib.Lerp(pos, campos, 0.8f).ToUnity();
+
+            }
+            Debug.Log(pos.ToUnity());
+
             EulerVisual.x += Input.GetAxisRaw("Mouse X") * 0.3f;
             EulerVisual.y += Input.GetAxisRaw("Mouse Y") * 0.3f;
         }

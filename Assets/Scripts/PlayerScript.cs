@@ -19,9 +19,6 @@ public class PlayerScript : MonoBehaviour
         // Rotate & Move player along x-axis relative to camera-facing direction
         if (Input.GetAxis("Horizontal") != 0)
         {
-            //Rotate
-            RotateTo = Quaternion.LookRotation(Input.GetAxis("Horizontal") * relative_right);
-            transform.rotation = Quaternion.Slerp(transform.rotation, RotateTo, Time.deltaTime * ROTATE_SPEED);
 
             //Move
             transform.position += Input.GetAxis("Horizontal") * new Vector3(cam.transform.right.x, 0f, cam.transform.right.z) * MOVE_SPEED * Time.deltaTime;
@@ -30,9 +27,6 @@ public class PlayerScript : MonoBehaviour
         // Rotate & Move player along z-axis relative to camera-facing direction
         if (Input.GetAxis("Vertical") != 0)
         {
-            //Rotate
-            RotateTo = Quaternion.LookRotation(Input.GetAxis("Vertical") * relative_forward);
-            transform.rotation = Quaternion.Slerp(transform.rotation, RotateTo, Time.deltaTime * ROTATE_SPEED);
 
             //Move
             transform.position += Input.GetAxis("Vertical") * new Vector3(cam.transform.forward.x, 0f, cam.transform.forward.z) * MOVE_SPEED * Time.deltaTime;
