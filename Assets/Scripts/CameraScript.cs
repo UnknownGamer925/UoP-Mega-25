@@ -17,10 +17,10 @@ public class CameraScript : MonoBehaviour
         float mouse_x = 0;
         float mouse_y = 0;
         //Get Mouse Position
-        if (!Input.GetKey(KeyCode.E))
+        if (!Input.GetKey(KeyCode.E) && !Input.GetKey(KeyCode.G))
         {
-            mouse_x = Input.GetAxis("Mouse X");
-            mouse_y = Input.GetAxis("Mouse Y");
+            mouse_x = Input.GetAxis("Mouse X") * 5;
+            mouse_y = Input.GetAxis("Mouse Y") * 5;
         }
             
 

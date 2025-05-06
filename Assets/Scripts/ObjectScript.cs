@@ -15,9 +15,11 @@ public class ObjectScript : MonoBehaviour
     Vector3[] ModelSpaceVertices;
     Vector3[] transformedVertices;
     MeshFilter mf;
+    Vec3 Scalevec;
 
     Vec3 pos;
     Vec3 campos;
+    bool once;
 
 
     public Mat4X4 RotateMesh(Vec3 euler)
@@ -48,12 +50,12 @@ public class ObjectScript : MonoBehaviour
         return yawmat * (pitchmat * rollmat);
     }
 
-    public void ScaleMesh()
+    public void ScaleMesh(Vec3 vec)
     {
         Mat4X4 matrix =  new Mat4X4(
-            new Vec3(1, 0, 0) * 2f,
-            new Vec3(0, 1, 0) * 2f,
-            new Vec3(0, 0, 1) * 2f,
+            new Vec3(1, 0, 0) * vec.x,
+            new Vec3(0, 1, 0) * vec.x,
+            new Vec3(0, 0, 1) * vec.x,
             Vec3.empty
         );
 
@@ -115,14 +117,35 @@ public class ObjectScript : MonoBehaviour
 
             EulerVisual.x += Input.GetAxisRaw("Mouse X") * 0.3f;
             EulerVisual.y += Input.GetAxisRaw("Mouse Y") * 0.3f;
+
+            Vec3 EulerVec3 = Mathlib.ToMathlib(EulerVisual);
+
+            Quat RelativeRot = RotateMesh(EulerVec3).ToQuat();
+
+            transform.rotation = RelativeRot.ToUnity();
+        }
+
+        if (Input.GetKey(KeyCode.G))
+        {
+            if (!once)
+            {
+                Scalevec = Vec3.empty;
+                once = true;
+            }
+            
+            Scalevec.x += Input.GetAxisRaw("Mouse X") * 0.3f;
+            Scalevec.y += Input.GetAxisRaw("Mouse Y") * 0.3f;
+            ScaleMesh(Scalevec);
+        }
+        else
+        {
+            once = false;
         }
 
 
-        Vec3 EulerVec3 = Mathlib.ToMathlib(EulerVisual);
+        
 
-        Quat RelativeRot = RotateMesh(EulerVec3).ToQuat();
-
-        transform.rotation = RelativeRot.ToUnity();
+        
         
     }
 }
