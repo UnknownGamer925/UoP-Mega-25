@@ -4,11 +4,24 @@ using UnityEngine;
 
 public class CameraScript : MonoBehaviour
 {
+
+    private Vector3 euler = Vector3.zero;
     // Start is called before the first frame update
     void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+    }
+
+    Vec3 CalculateEuler(Vec3 dir)
+    {
+        Vec3 eul = Vec3.empty;
+
+        eul.x = Mathf.Atan2(dir.x, dir.z) * Mathf.Rad2Deg;
+        eul.y = -Mathf.Asin(dir.y) * Mathf.Rad2Deg;
+        eul.z = 0;
+
+        return eul;
     }
 
     // Update is called once per frame
@@ -19,13 +32,14 @@ public class CameraScript : MonoBehaviour
         //Get Mouse Position
         if (!Input.GetKey(KeyCode.E) && !Input.GetKey(KeyCode.G))
         {
-            mouse_x = Input.GetAxis("Mouse X") * 5;
-            mouse_y = Input.GetAxis("Mouse Y") * 5;
+            mouse_x = Input.GetAxis("Mouse X");
+            mouse_y = Input.GetAxis("Mouse Y");
         }
-            
+
+        Vec3 direction = new Vec3(mouse_y, mouse_x, 1f);
 
         //updates position and rotation based on player & mouse position respetively
-        Vector3 euler = this.transform.eulerAngles;
-        this.transform.eulerAngles = new Vector3((euler.x - mouse_y), (euler.y + mouse_x), 0f);
+        euler += CalculateEuler(direction.Normalized()).ToUnity() * Time.deltaTime * 20f;
+        this.transform.eulerAngles = euler;
     }
 }
