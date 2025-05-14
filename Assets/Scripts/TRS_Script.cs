@@ -8,12 +8,24 @@ public class TRS_Script : MonoBehaviour
     [SerializeField] public Vector3 rotation;
     [SerializeField] public Vector3 scale;
 
+    Vec3 LoopVec; //control variable
+
     MeshFilter meshFilter;
     bool flip;
 
     Mesh mesh;
     Vector3[] originalVertices;
     Vector3[] transformedVertices;
+
+    enum STATE
+    {
+        UP, 
+        DOWN, 
+        LEFT, 
+        RIGHT,
+        NONE
+    }
+    STATE state;
 
     public Mat4X4 TranslateMesh()
     {
@@ -68,6 +80,58 @@ public class TRS_Script : MonoBehaviour
             Vec3.empty
         );
     }
+
+
+
+    void SquareLoop()
+    {
+
+        if (LoopVec.x <= 0 && LoopVec.y >= 30)
+        { // if in top left
+            state = STATE.DOWN;
+
+        }
+        else if (LoopVec.x >= 30 && LoopVec.y >= 30)
+        { // if in top right
+            state = STATE.LEFT;
+
+        }
+        else if (LoopVec.x >= 30 && LoopVec.y <= 0)
+        { // if in bottom right
+            state = STATE.UP;
+
+        }
+        else if (LoopVec.x <= 0 && LoopVec.y <= 0)
+        { //if in starting corner bottom left
+            state = STATE.RIGHT;
+            
+        }
+       
+
+        switch (state)
+        {
+            case STATE.LEFT:
+                position.z -= 5f * Time.deltaTime;
+                LoopVec.x -= 30f * Time.deltaTime;
+            break;
+            case STATE.DOWN:
+                position.y -= 5f * Time.deltaTime;
+                LoopVec.y -= 30f * Time.deltaTime;
+            break;
+            case STATE.RIGHT:
+                position.z += 5f * Time.deltaTime;
+                LoopVec.x += 30f * Time.deltaTime;
+            break;
+            case STATE.UP:
+                position.y += 5f * Time.deltaTime;
+                LoopVec.y += 30f * Time.deltaTime;
+            break;
+            default:
+                break;
+        }
+        
+    }
+
 
     void AutoSet()
     {
@@ -142,16 +206,16 @@ public class TRS_Script : MonoBehaviour
         transformedVertices = new Vector3[originalVertices.Length];
         position = transform.position;
         scale = new Vec3(1, 1, 1).ToUnity();
+        LoopVec = new Vec3(0, 0, 0);
    }
 
     // Update is called once per frame
     void Update()
     {
-
-        AutoSet();
-        Movement();
-
         transform.position = position;
+        AutoSet();
+        //Movement();
+        SquareLoop();
         Mat4X4 scalemesh = ScaleMesh();
         Mat4X4 rotatemesh = RotateMesh(Mathlib.ToMathlib(rotation));
         Mat4X4 translatemesh = TranslateMesh();
