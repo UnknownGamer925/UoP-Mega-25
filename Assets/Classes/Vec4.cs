@@ -16,11 +16,11 @@ public class Vec4 : Mathlib
         z = vz; 
         w = vw;
     }
-    public Vec4 empty
+    public static Vec4 empty
     {
         get
         {
-            return new Vec4(0,0,0,0);
+            return new Vec4(0,0,0,1);
         }
     }
 

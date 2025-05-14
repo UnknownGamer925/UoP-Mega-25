@@ -11,6 +11,7 @@ public class ObjectScript : MonoBehaviour
     [SerializeField] Camera Cam;
     [SerializeField] GameObject ItemPoint;
     private bool focus;
+    Vec3 origin_point;
 
     Vector3[] ModelSpaceVertices;
     Vector3[] transformedVertices;
@@ -20,6 +21,9 @@ public class ObjectScript : MonoBehaviour
     Vec3 pos;
     Vec3 campos;
     bool once;
+    float timer;
+    bool activate;
+
 
 
     public Mat4X4 RotateMesh(Vec3 euler)
@@ -50,12 +54,12 @@ public class ObjectScript : MonoBehaviour
         return yawmat * (pitchmat * rollmat);
     }
 
-    public void ScaleMesh(Vec3 vec)
+    public void ScaleMesh(float scale)
     {
         Mat4X4 matrix =  new Mat4X4(
-            new Vec3(1, 0, 0) * vec.x,
-            new Vec3(0, 1, 0) * vec.x,
-            new Vec3(0, 0, 1) * vec.x,
+            new Vec3(1, 0, 0) * scale,
+            new Vec3(0, 1, 0) * scale,
+            new Vec3(0, 0, 1) * scale,
             Vec3.empty
         );
 
@@ -71,16 +75,19 @@ public class ObjectScript : MonoBehaviour
 
     public void FocusToggle()
     {
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            focus = true;
-
-
-        }
         if (Input.GetKeyUp(KeyCode.E))
         {
             focus = false;
-            
+            timer = 0;
+
+
+        }
+
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            focus = true;
+            timer = 0;
+
 
         }
     }
@@ -90,30 +97,27 @@ public class ObjectScript : MonoBehaviour
         mf = GetComponent<MeshFilter>();
         ModelSpaceVertices = mf.mesh.vertices;
         transformedVertices = new Vector3[ModelSpaceVertices.Length];
+        Scalevec = Vec3.empty;
+        
 
         pos = Mathlib.ToMathlib(ItemPoint.transform.position);
+        origin_point = new Vec3(-4,7,6);
     }
 
     // Update is called once per frame
     void Update()
     {
         FocusToggle();
-        
-        
-        if (Input.GetKey(KeyCode.E))
-        {
-            if (!focus)
-            {
-                //campos = Mathlib.ToMathlib(ItemPoint.transform.position);
-                transform.position = Mathlib.Lerp(campos, pos, 0.8f).ToUnity();
-            }
-            else if (focus)
-            {
-                campos = Mathlib.ToMathlib(ItemPoint.transform.position);
-                transform.position = Mathlib.Lerp(pos, campos, 0.8f).ToUnity();
 
+
+        if (focus)
+        {
+            campos = Mathlib.ToMathlib(ItemPoint.transform.position);
+            if (timer <= 1)
+            {
+                timer += 0.02f;
             }
-            Debug.Log(pos.ToUnity());
+            transform.position = Mathlib.Lerp(origin_point, campos, timer).ToUnity();
 
             EulerVisual.x += Input.GetAxisRaw("Mouse X") * 0.3f;
             EulerVisual.y += Input.GetAxisRaw("Mouse Y") * 0.3f;
@@ -124,28 +128,26 @@ public class ObjectScript : MonoBehaviour
 
             transform.rotation = RelativeRot.ToUnity();
         }
-
-        if (Input.GetKey(KeyCode.G))
-        {
-            if (!once)
-            {
-                Scalevec = Vec3.empty;
-                once = true;
-            }
-            
-            Scalevec.x += Input.GetAxisRaw("Mouse X") * 0.3f;
-            Scalevec.y += Input.GetAxisRaw("Mouse Y") * 0.3f;
-            ScaleMesh(Scalevec);
-        }
         else
         {
-            once = false;
+            if (timer <= 1)
+            {
+                timer += Time.deltaTime;
+            }
+            transform.position = Mathlib.Lerp(Mathlib.ToMathlib(transform.position), origin_point, timer).ToUnity();
         }
 
+        if (Input.GetKeyDown(KeyCode.G))
+        {
+            //Scalevec = Vec3.empty;
+        }
+        else if (Input.GetKey(KeyCode.G))
+        {
 
-        
+            Scalevec.x += Input.GetAxisRaw("Mouse X") * 0.3f;
+            Scalevec.y += Input.GetAxisRaw("Mouse Y") * 0.3f;
+            ScaleMesh(Scalevec.x + Scalevec.y);
+        }
 
-        
-        
     }
 }

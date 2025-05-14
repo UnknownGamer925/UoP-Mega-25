@@ -36,10 +36,11 @@ public class CameraScript : MonoBehaviour
             mouse_y = Input.GetAxis("Mouse Y");
         }
 
-        Vec3 direction = new Vec3(mouse_y, mouse_x, 1f);
+        Vec3 direction = new Vec3(-mouse_y, -mouse_x, 1f);
 
         //updates position and rotation based on player & mouse position respetively
         euler += CalculateEuler(direction.Normalized()).ToUnity() * Time.deltaTime * 20f;
+        euler.x = Mathf.Clamp(euler.x, -90, 90);
         this.transform.eulerAngles = euler;
     }
 }
