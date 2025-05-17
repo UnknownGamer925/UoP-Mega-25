@@ -117,7 +117,7 @@ public class ObjectScript : MonoBehaviour
             {
                 timer += 0.02f;
             }
-            transform.position = Mathlib.Lerp(origin_point, campos, timer).ToUnity();
+            transform.position = Mathlib.Lerp(origin_point, campos, timer).ToUnity(); //LERP from pedestal to player
 
             EulerVisual.x += Input.GetAxisRaw("Mouse X") * 0.3f;
             EulerVisual.y += Input.GetAxisRaw("Mouse Y") * 0.3f;
@@ -134,7 +134,7 @@ public class ObjectScript : MonoBehaviour
             {
                 timer += Time.deltaTime;
             }
-            transform.position = Mathlib.Lerp(Mathlib.ToMathlib(transform.position), origin_point, timer).ToUnity();
+            transform.position = Mathlib.Lerp(Mathlib.ToMathlib(transform.position), origin_point, timer).ToUnity(); //LERP from player to pedestal
         }
 
         if (Input.GetKeyDown(KeyCode.G))

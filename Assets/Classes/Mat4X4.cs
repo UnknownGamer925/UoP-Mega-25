@@ -106,7 +106,7 @@ public class Mat4X4 : Mathlib
         float T =  1 + table[0,0] + table[1,1] + table[2,2];
         float S;
 
-        if (T > 0.00000001f)
+        if (T > 0.00000001f) //if result is above the threshold for which rounding errors could occur, apply instantly
         {
             S = Mathf.Sqrt(T) * 2;
             newQuat = new Quat(
@@ -116,7 +116,7 @@ public class Mat4X4 : Mathlib
             ((table[0, 1] - table[1, 0]) / S)
             );
         }
-        else
+        else //Checking for float rounding errors in each collumn
         {
             if ((table[0, 0] > table[1, 1]) && table[0, 0] > table[2, 2]) //collumn 0
             {
